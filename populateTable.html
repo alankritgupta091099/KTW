@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>KTW</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <table class="table" id="datatable">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+          </table>
+        <script>
+            let request= new XMLHttpRequest();
+            request.open('GET','https://jsonplaceholder.typicode.com/posts');
+            request.send();
+            var data;
+            request.onload=()=>{
+                console.log(request);
+                if(request.status==200){
+                    data=JSON.parse(request.response);
+                    console.log(data);
+                    appendData(data)
+                }else{
+                    console.log(`error ${request.status} ${request.statusText}`)
+                }
+            }
+            function appendData(data){
+                var table= document.getElementById('datatable')
+                data.forEach(element => {
+                    var tr= document.createElement('tr');
+                    tr.innerHTML="<td>"+element.userId+"</td>"+"<td>"+element.id+"</td>"+"<td>"+element.title+"</td>"+"<td>"+element.body+"</td>";         
+                    
+                table.appendChild(tr);
+                });
+            }
+        </script>
+    </body>
+</html>
